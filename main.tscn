@@ -1,0 +1,235 @@
+[gd_scene load_steps=4 format=3 uid="uid://bynqnxj3khd3j"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_hmpbw"]
+
+[sub_resource type="Theme" id="Theme_jmdw8"]
+default_font_size = 18
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_whok0"]
+color = Color(0.415686, 0.415686, 0.415686, 0.807843)
+vertical = true
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_jmdw8")
+script = ExtResource("1_hmpbw")
+
+[node name="option_def" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 2
+offset_left = 578.0
+offset_top = 20.0
+offset_right = 1132.0
+offset_bottom = 61.0
+size_flags_horizontal = 3
+
+[node name="mc" type="MarginContainer" parent="option_def"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="hbc" type="HBoxContainer" parent="option_def/mc"]
+layout_mode = 2
+
+[node name="name_label" type="Label" parent="option_def/mc/hbc"]
+layout_mode = 2
+text = "Название:"
+
+[node name="name_edit" type="LineEdit" parent="option_def/mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Insert name"
+
+[node name="vs" type="VSeparator" parent="option_def/mc/hbc"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_whok0")
+
+[node name="weight_name" type="Label" parent="option_def/mc/hbc"]
+layout_mode = 2
+text = "Вес:"
+
+[node name="weight_edit" type="LineEdit" parent="option_def/mc/hbc"]
+layout_mode = 2
+text = "1"
+
+[node name="vs2" type="VSeparator" parent="option_def/mc/hbc"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_whok0")
+
+[node name="color_label" type="Label" parent="option_def/mc/hbc"]
+layout_mode = 2
+text = "Цвет:"
+
+[node name="color" type="ColorPickerButton" parent="option_def/mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "1"
+
+[node name="delete" type="Button" parent="option_def/mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Удалить"
+
+[node name="mc" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="hbc" type="HBoxContainer" parent="mc"]
+layout_mode = 2
+alignment = 1
+
+[node name="wheel_handler" type="VBoxContainer" parent="mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="wheel" type="MarginContainer" parent="mc/hbc/wheel_handler"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="wheel_center" type="Node2D" parent="mc/hbc/wheel_handler/wheel"]
+
+[node name="winner_label" type="Label" parent="mc/hbc/wheel_handler/wheel"]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="hbc" type="HBoxContainer" parent="mc/hbc/wheel_handler"]
+layout_mode = 2
+
+[node name="play" type="Button" parent="mc/hbc/wheel_handler/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Крутить"
+
+[node name="reset" type="Button" parent="mc/hbc/wheel_handler/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Сбросить"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="mc/hbc"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="mc/hbc/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="mc/hbc/VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="Polygon2D" type="Polygon2D" parent="mc/hbc/VBoxContainer/CenterContainer/Control"]
+polygon = PackedVector2Array(0, -5, -12, 0, 0, 5)
+
+[node name="Button" type="Button" parent="mc/hbc/VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = " "
+flat = true
+
+[node name="vbc" type="VBoxContainer" parent="mc/hbc"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="sc" type="ScrollContainer" parent="mc/hbc/vbc"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+vertical_scroll_mode = 2
+
+[node name="mc" type="MarginContainer" parent="mc/hbc/vbc/sc"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="vbc" type="VBoxContainer" parent="mc/hbc/vbc/sc/mc"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="add" type="Button" parent="mc/hbc/vbc/sc/mc/vbc"]
+layout_mode = 2
+text = "Добавить штуку"
+
+[node name="console" type="TabContainer" parent="mc/hbc/vbc"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+current_tab = 1
+
+[node name="Output" type="TabBar" parent="mc/hbc/vbc/console"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Settigns" type="TabBar" parent="mc/hbc/vbc/console"]
+clip_contents = true
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="mc" type="MarginContainer" parent="mc/hbc/vbc/console/Settigns"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="vbc" type="VBoxContainer" parent="mc/hbc/vbc/console/Settigns/mc"]
+layout_mode = 2
+
+[node name="wheel_rotation" type="HBoxContainer" parent="mc/hbc/vbc/console/Settigns/mc/vbc"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mc/hbc/vbc/console/Settigns/mc/vbc/wheel_rotation"]
+layout_mode = 2
+text = "Wheel time rotation"
+
+[node name="value" type="SpinBox" parent="mc/hbc/vbc/console/Settigns/mc/vbc/wheel_rotation"]
+layout_mode = 2
+max_value = 60.0
+step = 0.1
+value = 3.0
+
+[node name="Other" type="TabBar" parent="mc/hbc/vbc/console"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="blank" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
