@@ -8,9 +8,15 @@ var console_state:bool = false
 var screen_font_ratio = 18.0 / min(default_screen_size.x, default_screen_size.y)
 var big_screen_font_ratio = 28.0 / min(default_screen_size.x, default_screen_size.y)
 var wheel_time_rotation:float = 3.0
+var idx_option_for_typing:int = 0
 
 class ManageOptions:
 	static var options:Array = []
+	
+	static func is_empty() -> bool:
+		if options.size() > 0:
+			return false
+		return true
 	
 	static func normalize_options() -> void:
 		var sum:float = 0.0
@@ -72,6 +78,15 @@ func _ready() -> void:
 		var new_option:Option = Option.new(str(ManageOptions.options.size()+1), 1.0, rnd_color)
 		new_option.polygon = new_polygon
 		ManageOptions.add_option(new_option)
+		od.get_node("mc/hbc/expand").pressed.connect(func():
+			idx_option_for_typing = od.get_index()
+			$text_editor/control/textedit.text = od.get_node("mc/hbc/name_edit").text
+			$text_editor.show()
+			$text_editor/control/textedit.grab_focus()
+			$text_editor/control/textedit.set_caret_column(10)
+			$text_editor/control/textedit.set_caret_line(1000)
+			)
+			
 		od.get_node("mc/hbc/name_edit").text = str(ManageOptions.options.size())
 		od.get_node("mc/hbc/color").color = rnd_color
 		od.get_node("mc/hbc/delete").pressed.connect(func():ManageOptions.remove_option(od.get_index());update_circle();od.queue_free())
@@ -93,9 +108,23 @@ func _ready() -> void:
 		create_tween().tween_property($mc/hbc/wheel_handler/wheel/winner_label, "text", "", 0.3))
 		
 	$mc/hbc/vbc/console/Settigns/mc/vbc/wheel_rotation/value.value_changed.connect(func(value:float):
-		wheel_time_rotation=value)
+		wheel_time_rotation=value
+		$mc/hbc/vbc/console/Settigns/mc/vbc/wheel_rotation/value_label.text = "%02d.%01d" % [int(value), int((value-floorf(value))*10) ]
+		
+		)
+	
+	$text_editor/control/textedit.text_changed.connect(func():
+		$mc/hbc/vbc/sc/mc/vbc.get_child(idx_option_for_typing).get_node("mc/hbc/name_edit").text = $text_editor/control/textedit.text
+		ManageOptions.options[idx_option_for_typing].name = $text_editor/control/textedit.text)
+	$mc/hbc/vbc/console/Output/mc/vbc/clear.pressed.connect(func():$mc/hbc/vbc/console/Output/mc/vbc/text.text = "")
+
+func write_to_output(msg:String) -> void:
+	$mc/hbc/vbc/console/Output/mc/vbc/text.text += msg + "\n"
 
 func start() -> void:
+	if ManageOptions.is_empty():
+		write_to_output("Circle is empty")
+		return
 	$blank.show()
 	toggle_buttons(false)
 	var rnd = randf()
@@ -110,7 +139,7 @@ func start() -> void:
 	tween.tween_property($mc/hbc/wheel_handler/wheel/wheel_center, "rotation", rnd*pi2-PI/2.0, wheel_time_rotation).set_trans(Tween.TRANS_QUART)
 	await tween.finished
 	create_tween().tween_property($mc/hbc/wheel_handler/wheel/winner_label, "text", ManageOptions.options[winner].name, 0.3)
-	
+	write_to_output(ManageOptions.options[winner].name + " - is winner")
 	toggle_buttons(true)
 	$blank.hide()
 

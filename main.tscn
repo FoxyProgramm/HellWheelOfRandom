@@ -19,6 +19,15 @@ grow_vertical = 2
 theme = SubResource("Theme_jmdw8")
 script = ExtResource("1_hmpbw")
 
+[node name="bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.188371, 0.188371, 0.188371, 1)
+
 [node name="option_def" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 2
@@ -46,6 +55,10 @@ text = "Название:"
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Insert name"
+
+[node name="expand" type="Button" parent="option_def/mc/hbc"]
+layout_mode = 2
+text = "e"
 
 [node name="vs" type="VSeparator" parent="option_def/mc/hbc"]
 layout_mode = 2
@@ -111,7 +124,7 @@ theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 28
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 2
+autowrap_mode = 3
 
 [node name="hbc" type="HBoxContainer" parent="mc/hbc/wheel_handler"]
 layout_mode = 2
@@ -128,20 +141,20 @@ size_flags_horizontal = 3
 focus_mode = 0
 text = "Сбросить"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="mc/hbc"]
+[node name="thing_for_cursor" type="VBoxContainer" parent="mc/hbc"]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="mc/hbc/VBoxContainer"]
+[node name="cc" type="CenterContainer" parent="mc/hbc/thing_for_cursor"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" type="Control" parent="mc/hbc/VBoxContainer/CenterContainer"]
+[node name="cursor_handler" type="Control" parent="mc/hbc/thing_for_cursor/cc"]
 layout_mode = 2
 
-[node name="Polygon2D" type="Polygon2D" parent="mc/hbc/VBoxContainer/CenterContainer/Control"]
+[node name="cursor" type="Polygon2D" parent="mc/hbc/thing_for_cursor/cc/cursor_handler"]
 polygon = PackedVector2Array(0, -5, -12, 0, 0, 5)
 
-[node name="Button" type="Button" parent="mc/hbc/VBoxContainer"]
+[node name="helper" type="Button" parent="mc/hbc/thing_for_cursor"]
 layout_mode = 2
 disabled = true
 text = " "
@@ -184,8 +197,35 @@ current_tab = 1
 
 [node name="Output" type="TabBar" parent="mc/hbc/vbc/console"]
 visible = false
+clip_contents = true
 layout_mode = 2
 metadata/_tab_index = 0
+
+[node name="mc" type="MarginContainer" parent="mc/hbc/vbc/console/Output"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="vbc" type="VBoxContainer" parent="mc/hbc/vbc/console/Output/mc"]
+layout_mode = 2
+
+[node name="text" type="RichTextLabel" parent="mc/hbc/vbc/console/Output/mc/vbc"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 2
+scroll_following = true
+selection_enabled = true
+
+[node name="clear" type="Button" parent="mc/hbc/vbc/console/Output/mc/vbc"]
+layout_mode = 2
+text = "clear"
 
 [node name="Settigns" type="TabBar" parent="mc/hbc/vbc/console"]
 clip_contents = true
@@ -214,16 +254,52 @@ layout_mode = 2
 layout_mode = 2
 text = "Wheel time rotation"
 
-[node name="value" type="SpinBox" parent="mc/hbc/vbc/console/Settigns/mc/vbc/wheel_rotation"]
+[node name="value" type="HSlider" parent="mc/hbc/vbc/console/Settigns/mc/vbc/wheel_rotation"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+focus_mode = 0
 max_value = 60.0
 step = 0.1
 value = 3.0
+
+[node name="value_label" type="Label" parent="mc/hbc/vbc/console/Settigns/mc/vbc/wheel_rotation"]
+layout_mode = 2
+text = "03.0"
 
 [node name="Other" type="TabBar" parent="mc/hbc/vbc/console"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
+
+[node name="text_editor" type="PopupPanel" parent="."]
+title = "Texta, yo"
+initial_position = 4
+size = Vector2i(290, 115)
+wrap_controls = false
+unresizable = false
+borderless = false
+
+[node name="control" type="Control" parent="text_editor"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="textedit" type="TextEdit" parent="text_editor/control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "your text"
 
 [node name="blank" type="Control" parent="."]
 visible = false
